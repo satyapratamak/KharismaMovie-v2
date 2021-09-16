@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/nav_now_playing_movie">
+
+    <fragment
+        android:id="@+id/nav_now_playing_movie"
+        android:name="com.satya.subm.kharismamovie.ui.movie.NowPlayingMovieFragment"
+        android:label="Now Playing Movie"
+        tools:layout="@layout/fragment_now_playing_movie" />
+    <fragment
+        android:id="@+id/nav_favorite_movie"
+        android:name="com.satya.subm.kharismamovie.ui.favorite.FavoriteMovieFragment"
+        android:label="Favorite Movie"
+        tools:layout="@layout/fragment_favorite_movie" />
+</navigation>
