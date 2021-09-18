@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NowPlayingMovieFragment : Fragment(R.layout.fragment_now_playing_movie) {
     private val nowPlayingMovieViewModel by viewModels<NowPlayingMovieViewModel>()
-    private var _binding : FragmentNowPlayingMovieBinding? = null
+    private var _binding: FragmentNowPlayingMovieBinding? = null
     private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -24,9 +24,13 @@ class NowPlayingMovieFragment : Fragment(R.layout.fragment_now_playing_movie) {
 
         binding.apply {
             rvNowPlayingMovie.setHasFixedSize(true)
-            rvNowPlayingMovie.adapter = nowPlayingMovieAdapter
+            rvNowPlayingMovie.adapter = nowPlayingMovieAdapter.withLoadStateHeaderAndFooter(
+                header = NowPlayingMovieLoadStateAdapter { nowPlayingMovieAdapter.retry() },
+                footer = NowPlayingMovieLoadStateAdapter { nowPlayingMovieAdapter.retry() }
+
+            )
         }
-        nowPlayingMovieViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
+        nowPlayingMovieViewModel.nowPlayingMovies.observe(viewLifecycleOwner) {
             nowPlayingMovieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
     }

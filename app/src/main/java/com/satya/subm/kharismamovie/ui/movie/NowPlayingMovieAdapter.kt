@@ -11,40 +11,44 @@ import com.satya.subm.kharismamovie.R
 import com.satya.subm.kharismamovie.data.remote.NowPlayingMovie
 import com.satya.subm.kharismamovie.databinding.ItemNowPlayingMovieBinding
 
-class NowPlayingMovieAdapter : PagingDataAdapter<NowPlayingMovie, NowPlayingMovieAdapter.NowPlayingMovieViewHolder>(
-    COMPARATOR) {
+class NowPlayingMovieAdapter :
+    PagingDataAdapter<NowPlayingMovie, NowPlayingMovieAdapter.NowPlayingMovieViewHolder>(
+        COMPARATOR
+    ) {
 
-    inner class NowPlayingMovieViewHolder(private val binding : ItemNowPlayingMovieBinding)
-        :RecyclerView.ViewHolder(binding.root){
-            fun bind(nowPlayingMovie: NowPlayingMovie){
+    inner class NowPlayingMovieViewHolder(private val binding: ItemNowPlayingMovieBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(nowPlayingMovie: NowPlayingMovie) {
 
-                with(binding){
-                    Glide.with(itemView)
-                        .load("${nowPlayingMovie.baseUrl}${nowPlayingMovie.poster_path}")
-                        .centerCrop()
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .error(R.drawable.ic_baseline_error_24)
-                        .into(ivPosterPath)
-                    tvOriginalTitle.text = nowPlayingMovie.original_title
+            with(binding) {
+                Glide.with(itemView)
+                    .load("${nowPlayingMovie.baseUrl}${nowPlayingMovie.poster_path}")
+                    .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .error(R.drawable.ic_baseline_error_24)
+                    .into(ivPosterPath)
+                tvOriginalTitle.text = nowPlayingMovie.original_title
 
-                }
             }
-
         }
 
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingMovieViewHolder {
-       val binding = ItemNowPlayingMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemNowPlayingMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NowPlayingMovieViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NowPlayingMovieViewHolder, position: Int) {
         val currentItem = getItem(position)
-        if (currentItem != null){
+        if (currentItem != null) {
             holder.bind(currentItem)
         }
     }
-    companion object{
-        private val COMPARATOR = object : DiffUtil.ItemCallback<NowPlayingMovie> (){
+
+    companion object {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<NowPlayingMovie>() {
             override fun areItemsTheSame(
                 oldItem: NowPlayingMovie,
                 newItem: NowPlayingMovie

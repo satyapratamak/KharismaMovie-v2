@@ -12,8 +12,10 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class NowPlayingMovieViewModel @Inject constructor(private val nowPlayingMovieRepository: NowPlayingMovieRepository) : ViewModel() {
-    val nowPlayingMovies : LiveData<PagingData<NowPlayingMovie>> = nowPlayingMovieRepository.getNowPlayingMovie()
+class NowPlayingMovieViewModel @Inject constructor(private val nowPlayingMovieRepository: NowPlayingMovieRepository) :
+    ViewModel() {
+    val nowPlayingMovies: LiveData<PagingData<NowPlayingMovie>> =
+        nowPlayingMovieRepository.getNowPlayingMovie()
 
 
 }
