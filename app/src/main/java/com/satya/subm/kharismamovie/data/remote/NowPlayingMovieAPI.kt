@@ -16,5 +16,12 @@ interface NowPlayingMovieAPI {
         @Query("page")
         position: Int
 
-    ): NowPlayingMovieRepsonse //permintaan
+    ): NowPlayingMovieRepsonse
+
+    @GET("search/movie?api_key=$API_KEY")
+    suspend fun getSearchMovie(
+        @Query("query") query : String,
+        @Query("page") page : Int,
+
+    ): NowPlayingMovieRepsonse//permintaan
 }

@@ -17,6 +17,17 @@ class NowPlayingMovieRepository @Inject constructor(private val nowPlayingMovieA
                 maxSize = 20,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { NowPlayingMoviePagingSource(nowPlayingMovieAPI) }
+            pagingSourceFactory = { NowPlayingMoviePagingSource(nowPlayingMovieAPI, null) }
         ).liveData
+
+    fun getSearchMovie(query : String) =
+        Pager(
+            config = PagingConfig(
+                pageSize = 5,
+                maxSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { NowPlayingMoviePagingSource(nowPlayingMovieAPI, query) }
+        ).liveData
+
 }

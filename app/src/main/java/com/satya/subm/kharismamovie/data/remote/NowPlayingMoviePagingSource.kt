@@ -8,7 +8,10 @@ import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1
 
-class NowPlayingMoviePagingSource(private val nowPlayingMovieAPI: NowPlayingMovieAPI) :
+class NowPlayingMoviePagingSource(
+    private val nowPlayingMovieAPI: NowPlayingMovieAPI,
+    private val query : String?
+    ) :
     PagingSource<Int, NowPlayingMovie>() {
     override fun getRefreshKey(state: PagingState<Int, NowPlayingMovie>): Int? {
         TODO("Not yet implemented")
@@ -17,7 +20,9 @@ class NowPlayingMoviePagingSource(private val nowPlayingMovieAPI: NowPlayingMovi
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NowPlayingMovie> {
         return try {
             val position = params.key ?: STARTING_PAGE_INDEX
-            val response = nowPlayingMovieAPI.getNowPlayingMovies(position)
+            val response = if (query != null) nowPlayingMovieAPI.getSearchMovie(query, position) else nowPlayingMovieAPI.getNowPlayingMovies(position)
+
+
             val nowPlayingMovies = response.results
 
             LoadResult.Page(
