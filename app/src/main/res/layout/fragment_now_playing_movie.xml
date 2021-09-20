@@ -49,4 +49,9 @@
         tools:visibility="visible"
         />
 
+    <include
+        android:id="@+id/item_now_playing_movie_load_state_footer"
+        layout="@layout/now_playing_movie_load_state_footer"
+        />
+
 </RelativeLayout>

@@ -1,15 +1,13 @@
 package com.satya.subm.kharismamovie.ui.movie
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import com.satya.subm.kharismamovie.data.remote.NowPlayingMovie
 import com.satya.subm.kharismamovie.data.remote.NowPlayingMovieRepository
 import android.app.Application
 import androidx.hilt.Assisted
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.*
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -37,7 +35,7 @@ class NowPlayingMovieViewModel @Inject constructor(
 
             nowPlayingMovieRepository.getSearchMovie(query)
         } else {
-            nowPlayingMovieRepository.getNowPlayingMovie()
+            nowPlayingMovieRepository.getNowPlayingMovie().cachedIn(viewModelScope)
         }
 
     }
