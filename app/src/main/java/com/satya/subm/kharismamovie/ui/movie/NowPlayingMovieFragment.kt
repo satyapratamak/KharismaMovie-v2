@@ -9,8 +9,10 @@ import androidx.core.view.isVisible
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.satya.subm.kharismamovie.R
+import com.satya.subm.kharismamovie.data.remote.NowPlayingMovie
 import com.satya.subm.kharismamovie.databinding.FragmentNowPlayingMovieBinding
 import com.satya.subm.kharismamovie.databinding.NowPlayingMovieLoadStateFooterBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +21,7 @@ import kotlinx.android.synthetic.main.now_playing_movie_load_state_footer.*
 
 
 @AndroidEntryPoint
-class NowPlayingMovieFragment : Fragment(R.layout.fragment_now_playing_movie) {
+class NowPlayingMovieFragment : Fragment(R.layout.fragment_now_playing_movie), NowPlayingMovieAdapter.OnItemClickListener {
     private val nowPlayingMovieViewModel by viewModels<NowPlayingMovieViewModel>()
     private var _binding: FragmentNowPlayingMovieBinding? = null
     private val binding get() = _binding!!
@@ -30,7 +32,7 @@ class NowPlayingMovieFragment : Fragment(R.layout.fragment_now_playing_movie) {
 
         _binding = FragmentNowPlayingMovieBinding.bind(view)
 
-        val nowPlayingMovieAdapter = NowPlayingMovieAdapter()
+        val nowPlayingMovieAdapter = NowPlayingMovieAdapter(this)
 
         binding.apply {
             rvNowPlayingMovie.setHasFixedSize(true)
@@ -95,5 +97,10 @@ class NowPlayingMovieFragment : Fragment(R.layout.fragment_now_playing_movie) {
             }
 
         })
+    }
+
+    override fun onItemClick(nowPlayingMovie: NowPlayingMovie) {
+        val actions = NowPlayingMovieFragmentDirections.actionNavNowPlayingMovieToNavDetailsMovie(nowPlayingMovie)
+        findNavController().navigate(actions)
     }
 }

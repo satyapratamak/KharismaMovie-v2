@@ -2,6 +2,7 @@ package com.satya.subm.kharismamovie.ui.movie
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,13 +12,29 @@ import com.satya.subm.kharismamovie.R
 import com.satya.subm.kharismamovie.data.remote.NowPlayingMovie
 import com.satya.subm.kharismamovie.databinding.ItemNowPlayingMovieBinding
 
-class NowPlayingMovieAdapter :
+class NowPlayingMovieAdapter (private val listener : OnItemClickListener) :
     PagingDataAdapter<NowPlayingMovie, NowPlayingMovieAdapter.NowPlayingMovieViewHolder>(
         COMPARATOR
     ) {
 
     inner class NowPlayingMovieViewHolder(private val binding: ItemNowPlayingMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener{
+                val position = bindingAdapterPosition
+                if(position != RecyclerView.NO_POSITION){
+                    val item = getItem(position)
+                    if(item != null){
+                        listener.onItemClick(item)
+                    }
+                }
+
+            }
+        }
+
+
+
         fun bind(nowPlayingMovie: NowPlayingMovie) {
 
             with(binding) {
@@ -60,6 +77,11 @@ class NowPlayingMovieAdapter :
             ): Boolean = oldItem == newItem
 
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(nowPlayingMovie: NowPlayingMovie)
+
     }
 
 

@@ -9,10 +9,25 @@
         android:id="@+id/nav_now_playing_movie"
         android:name="com.satya.subm.kharismamovie.ui.movie.NowPlayingMovieFragment"
         android:label="Now Playing Movie"
-        tools:layout="@layout/fragment_now_playing_movie" />
+        tools:layout="@layout/fragment_now_playing_movie" >
+        <action
+            android:id="@+id/action_nav_now_playing_movie_to_nav_details_movie"
+            app:destination="@id/nav_details_movie" />
+    </fragment>
     <fragment
         android:id="@+id/nav_favorite_movie"
         android:name="com.satya.subm.kharismamovie.ui.favorite.FavoriteMovieFragment"
         android:label="Favorite Movie"
-        tools:layout="@layout/fragment_favorite_movie" />
+        tools:layout="@layout/fragment_favorite_movie" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/nav_details_movie"
+        android:name="com.satya.subm.kharismamovie.ui.details.DetailsMovieFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_details_movie">
+        <argument
+            android:name="now_playing_movie"
+            app:argType="com.satya.subm.kharismamovie.data.remote.NowPlayingMovie" />
+    </fragment>
 </navigation>
