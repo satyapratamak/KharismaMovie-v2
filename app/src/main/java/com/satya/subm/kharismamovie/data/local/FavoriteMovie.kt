@@ -8,9 +8,10 @@ import java.io.Serializable
 @Entity(tableName = "favorite_movie")
 data class FavoriteMovie (
     val id_movie: String,
+    val original_title: String,
     val overview: String?,
     val poster_path: String,
-    val original_title: String,
+
 ):Serializable{
 
     @PrimaryKey(autoGenerate = true)

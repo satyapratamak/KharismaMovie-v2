@@ -35,7 +35,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFaveMovieDatabase(
+    fun provideFavMovieDatabase(
         @ApplicationContext app: Context
     ) = Room.databaseBuilder(
         app,

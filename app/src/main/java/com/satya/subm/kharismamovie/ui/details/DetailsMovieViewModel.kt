@@ -1,5 +1,6 @@
 package com.satya.subm.kharismamovie.ui.details
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.satya.subm.kharismamovie.data.local.FavoriteMovie
 import com.satya.subm.kharismamovie.data.local.FavoriteMovieRepository
@@ -11,6 +12,35 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+class DetailsMovieViewModel @ViewModelInject constructor(
+
+    private val repository: FavoriteMovieRepository
+): ViewModel(){
+    fun addToFavorite(nowPlayingMovie: NowPlayingMovie){
+
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.addToFavorite(
+                FavoriteMovie(
+                    nowPlayingMovie.id,
+                    nowPlayingMovie.original_title,
+                    nowPlayingMovie.overview,
+                    nowPlayingMovie.poster_path
+                )
+            )
+        }
+    }
+
+    suspend fun checkMovie(id:String) = repository.checkMovie(id)
+
+    fun removeFromFavorite(id: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.removeFromFavorite(id)
+        }
+    }
+
+
+}
+/*
 @HiltViewModel
 class DetailsMovieViewModel @Inject constructor(
     private val repository: FavoriteMovieRepository
@@ -39,4 +69,4 @@ class DetailsMovieViewModel @Inject constructor(
         }
     }
 
-}
+}*/
