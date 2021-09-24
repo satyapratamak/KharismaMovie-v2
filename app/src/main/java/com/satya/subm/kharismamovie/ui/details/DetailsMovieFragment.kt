@@ -15,19 +15,23 @@ import com.bumptech.glide.request.target.Target
 import com.satya.subm.kharismamovie.R
 import com.satya.subm.kharismamovie.databinding.FragmentDetailsMovieBinding
 import com.satya.subm.kharismamovie.ui.movie.NowPlayingMovieViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class DetailsMovieFragment : Fragment(R.layout.fragment_details_movie) {
 
     private val args by navArgs<DetailsMovieFragmentArgs>()
+    private val detailsMovieViewModel by viewModels<DetailsMovieViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentDetailsMovieBinding.bind(view)
+        detailsMovieViewModel
         binding.apply {
             val nowPlayingMovie = args.nowPlayingMovie
 
@@ -62,6 +66,34 @@ class DetailsMovieFragment : Fragment(R.layout.fragment_details_movie) {
 
             tvDescription.text = nowPlayingMovie.overview
             tvOriginalTitle.text = nowPlayingMovie.original_title
+
+            var isChecked = false
+            CoroutineScope(Dispatchers.IO).launch {
+                val count : Int = detailsMovieViewModel.checkMovie(nowPlayingMovie.id)
+
+                withContext(Dispatchers.Main){
+                    if (count > 0){
+                        toogleFavorite.isChecked = true
+                        isChecked = true
+                    }else{
+
+                        toogleFavorite.isChecked = false
+                        isChecked = false
+                    }
+                }
+            }
+
+            toogleFavorite.setOnClickListener {
+                isChecked = !isChecked
+
+                if (isChecked){
+                    detailsMovieViewModel.addToFavorite(nowPlayingMovie)
+                }else{
+                    detailsMovieViewModel.removeFromFavorite(nowPlayingMovie.id)
+                }
+
+                toogleFavorite.isChecked = isChecked
+            }
 
 
         }
@@ -128,17 +160,7 @@ class DetailsMovieFragment : Fragment(R.layout.fragment_details_movie) {
                 }
             }
 
-            toogleFavorite.setOnClickListener {
-                isChecked = !isChecked
 
-                if (isChecked){
-                    detailsMovieViewModel.addToFavorite(nowPlayingMovie)
-                }else{
-                    detailsMovieViewModel.removeFromFavorite(nowPlayingMovie.id)
-                }
-
-                toogleFavorite.isChecked = isChecked
-            }
         }
     }*/
 

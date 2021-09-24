@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-class DetailsMovieViewModel @ViewModelInject constructor(
+@HiltViewModel
+class DetailsMovieViewModel @Inject constructor(
 
     private val repository: FavoriteMovieRepository
 ): ViewModel(){
