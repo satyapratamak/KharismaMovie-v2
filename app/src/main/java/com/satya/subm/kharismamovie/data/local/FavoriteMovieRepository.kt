@@ -15,4 +15,6 @@ class FavoriteMovieRepository @Inject constructor(
         favoriteMovieDao.removeFromFavorite(id)
 
     }
+
+    fun getFavMovie() = favoriteMovieDao.getFavMovie()
 }
